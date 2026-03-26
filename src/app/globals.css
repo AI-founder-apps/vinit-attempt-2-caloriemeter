@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-warm: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --gradient-fresh: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --gradient-sunny: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  --gradient-nature: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+body {
+  background: linear-gradient(135deg, #fdf2f8 0%, #eff6ff 50%, #ecfdf5 100%);
+  min-height: 100vh;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #eb2f96, #722ed1, #2f54eb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.glow-border {
+  box-shadow: 0 0 20px rgba(235, 47, 150, 0.15), 
+              0 0 60px rgba(114, 46, 209, 0.1);
+}
+
+.upload-zone {
+  background: linear-gradient(135deg, rgba(235, 47, 150, 0.05), rgba(47, 84, 235, 0.05));
+  border: 3px dashed rgba(235, 47, 150, 0.3);
+  transition: all 0.3s ease;
+}
+
+.upload-zone:hover {
+  border-color: rgba(235, 47, 150, 0.6);
+  background: linear-gradient(135deg, rgba(235, 47, 150, 0.1), rgba(47, 84, 235, 0.1));
+  transform: scale(1.01);
+}
+
+.nutrient-card {
+  transition: all 0.3s ease;
+}
+
+.nutrient-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #eb2f96, #722ed1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #c41d7f, #531dab);
+}
