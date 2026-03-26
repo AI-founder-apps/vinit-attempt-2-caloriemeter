@@ -109,7 +109,7 @@ export async function POST(request: NextRequest) {
       ...analysis,
     });
   } catch (error: any) {
-    console.error('Analyze error:', error);
+    console.error('Analyze error:', error?.message || error);
 
     if (error?.message?.includes('JSON')) {
       return NextResponse.json(
@@ -118,8 +118,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Surface real error info for debugging
+    const debugMsg = error?.message || String(error);
     return NextResponse.json(
-      { error: 'Something went wrong analyzing your food. Please try again.' },
+      { error: `Analysis failed: ${debugMsg.substring(0, 200)}` },
       { status: 500 }
     );
   }
