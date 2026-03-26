@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String
+  password  String
+  createdAt DateTime @default(now()) @map("created_at")
+  scans     Scan[]
+
+  @@map("users")
+}
+
+model Scan {
+  id          Int      @id @default(autoincrement())
+  userId      Int      @map("user_id")
+  imageData   String   @map("image_data")
+  foodName    String   @map("food_name")
+  calories    Float?
+  protein     Float?
+  carbs       Float?
+  fat         Float?
+  fiber       Float?
+  sugar       Float?
+  servingSize String?  @map("serving_size")
+  itemsJson   String?  @map("items_json")
+  createdAt   DateTime @default(now()) @map("created_at")
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@map("scans")
+}

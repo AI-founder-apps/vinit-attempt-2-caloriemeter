@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import getDb from '@/lib/db';
+import prisma from '@/lib/db';
 import { verifyPassword, createToken } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
@@ -13,8 +13,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const db = getDb();
-    const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email) as any;
+    const user = await prisma.user.findUnique({ where: { email } });
 
     if (!user || !verifyPassword(password, user.password)) {
       return NextResponse.json(

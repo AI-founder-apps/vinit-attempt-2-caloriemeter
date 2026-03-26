@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import getDb from '@/lib/db';
+import prisma from '@/lib/db';
 import { getUserFromRequest } from '@/lib/auth';
 
 export async function GET(request: NextRequest) {
@@ -9,23 +9,23 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Please log in first' }, { status: 401 });
     }
 
-    const db = getDb();
-    const scans = db.prepare(
-      'SELECT * FROM scans WHERE user_id = ? ORDER BY created_at DESC'
-    ).all(user.id) as any[];
+    const scans = await prisma.scan.findMany({
+      where: { userId: user.id },
+      orderBy: { createdAt: 'desc' },
+    });
 
     const formattedScans = scans.map((scan) => ({
       id: scan.id,
-      food_name: scan.food_name,
+      food_name: scan.foodName,
       calories: scan.calories,
       protein: scan.protein,
       carbs: scan.carbs,
       fat: scan.fat,
       fiber: scan.fiber,
       sugar: scan.sugar,
-      serving_size: scan.serving_size,
-      items: scan.items_json ? JSON.parse(scan.items_json) : [],
-      created_at: scan.created_at,
+      serving_size: scan.servingSize,
+      items: scan.itemsJson ? JSON.parse(scan.itemsJson) : [],
+      created_at: scan.createdAt,
     }));
 
     return NextResponse.json({ scans: formattedScans });
